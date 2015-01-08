@@ -22,7 +22,7 @@ public class SysTray {
         }
 		
 	    popup = new PopupMenu();
-	    trayIcon = new TrayIcon(createImage("images/satelite.gif", "tray icon"));
+	    trayIcon = new TrayIcon(createImage("images/satellite.png", "tray icon"));
 	    tray = SystemTray.getSystemTray();
 	    
 	    CheckboxMenuItem CBAutoIP = new CheckboxMenuItem("Auto-detect IP");
@@ -32,6 +32,33 @@ public class SysTray {
 	    popup.add(MSettings);
 	    
 	    trayIcon.setToolTip("Sitelutiosn DDNS Client: Initialized");
+	    trayIcon.setPopupMenu(popup);
+	    
+        try {
+            tray.add(trayIcon);
+        } catch (AWTException e) {
+            System.out.println("TrayIcon could not be added.");
+            return;
+        }
+        
+        CBAutoIP.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                int cb1Id = e.getStateChange();
+                if (cb1Id == ItemEvent.SELECTED){
+                    //Callback for AutoIP
+                } else {
+                    //Callback for AutoIP
+                }
+            }
+        });
+        
+        MSettings.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null,
+                        "Show settings menu");
+                //Settings callback
+            }
+        });
 	    
 	}
 	
