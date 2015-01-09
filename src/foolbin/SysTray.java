@@ -13,23 +13,28 @@ public class SysTray {
 	private PopupMenu popup;
 	private TrayIcon trayIcon;
 	private SystemTray tray;
+	private Settings settings;
 	
-	public SysTray(){
+	public SysTray(final Settings settings){
         //Check the SystemTray support
         if (!SystemTray.isSupported()) {
             System.err.println("SystemTray is not supported");
             return;
         }
 		
+        this.settings=settings;
 	    popup = new PopupMenu();
 	    trayIcon = new TrayIcon(createImage("images/satellite.png", "tray icon"));
 	    tray = SystemTray.getSystemTray();
 	    
 	    CheckboxMenuItem CBAutoIP = new CheckboxMenuItem("Auto-detect IP");
 	    MenuItem MSettings = new MenuItem("Settings");
+	    MenuItem Quit = new MenuItem("Quit");
 	    
 	    popup.add(CBAutoIP);
 	    popup.add(MSettings);
+	    popup.addSeparator();
+	    popup.add(Quit);
 	    
 	    trayIcon.setToolTip("Sitelutiosn DDNS Client: Initialized");
 	    trayIcon.setPopupMenu(popup);
@@ -45,9 +50,9 @@ public class SysTray {
             public void itemStateChanged(ItemEvent e) {
                 int cb1Id = e.getStateChange();
                 if (cb1Id == ItemEvent.SELECTED){
-                    //Callback for AutoIP
+                    settings.setAutoIP(true);
                 } else {
-                    //Callback for AutoIP
+                    settings.setAutoIP(false);
                 }
             }
         });
@@ -57,6 +62,12 @@ public class SysTray {
                 JOptionPane.showMessageDialog(null,
                         "Show settings menu");
                 //Settings callback
+            }
+        });
+        
+        Quit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
             }
         });
 	    
