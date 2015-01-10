@@ -63,8 +63,6 @@ public class SysTray {
         
         MSettings.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,
-                        "Show settings menu");
                 gui.showGui();
             }
         });
