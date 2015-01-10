@@ -21,10 +21,8 @@ public class SettingsGUI {
 
 	private Settings settings;
     private JFrame frame;
-	final static boolean shouldFill = true;
-    final static boolean shouldWeightX = true;
-    final static boolean RIGHT_TO_LEFT = false;
-	
+    private Boolean hidden=true;
+    
 	public SettingsGUI(Settings s){
 		this.settings=s;
 		 createGUI();
@@ -176,7 +174,7 @@ public class SettingsGUI {
         
         //Hide the window and set to hide on close
         frame.pack();
-        frame.setVisible(false);
+        hideGui();
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -188,10 +186,17 @@ public class SettingsGUI {
 	
     public void showGui(){
     	frame.setVisible(true);
+    	hidden=true;
     }
     
     public void hideGui(){
     	frame.setVisible(false);
+    	hidden=false;
+    }
+    
+    public void toggleGui(){
+    	hidden = !hidden;
+    	frame.setVisible(hidden);
     }
 	
 }

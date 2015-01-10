@@ -63,7 +63,7 @@ public class SysTray {
         
         MSettings.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                gui.showGui();
+                gui.toggleGui();
             }
         });
         
