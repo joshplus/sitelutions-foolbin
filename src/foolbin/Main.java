@@ -8,8 +8,10 @@ public class Main {
 		Requester r = new Requester();
 		System.out.println("Hi!");
 		
-		Settings s = new Settings();
-		SysTray tray = new SysTray(s);
+		Settings s = new Settings("~/foolbin.settings");
+		SettingsGUI sgui = new SettingsGUI(s);
+		SysTray tray = new SysTray(s,sgui);
+		sgui.showGui();
 		
 		for (int i=0; i<10; i++){
 			System.out.println(r.getBody("http://vm.verajosh.com/in.php?max="+i+"&min="+i));

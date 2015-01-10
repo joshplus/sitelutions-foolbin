@@ -14,15 +14,19 @@ public class SysTray {
 	private TrayIcon trayIcon;
 	private SystemTray tray;
 	private Settings settings;
+	private SettingsGUI gui;
 	
-	public SysTray(final Settings settings){
-        //Check the SystemTray support
+	public SysTray(final Settings settings, final SettingsGUI gui){
+		this.gui = gui;
+        this.settings=settings;
+
+		//Check the SystemTray support
         if (!SystemTray.isSupported()) {
             System.err.println("SystemTray is not supported");
+            JOptionPane.showMessageDialog(null, "I can't bring up the system tray :-(");
+            gui.showGui();
             return;
         }
-		
-        this.settings=settings;
 	    popup = new PopupMenu();
 	    trayIcon = new TrayIcon(createImage("images/satellite.png", "tray icon"));
 	    tray = SystemTray.getSystemTray();
@@ -61,7 +65,7 @@ public class SysTray {
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(null,
                         "Show settings menu");
-                //Settings callback
+                gui.showGui();
             }
         });
         
