@@ -28,7 +28,12 @@ public class SysTray {
             return;
         }
 	    popup = new PopupMenu();
-	    trayIcon = new TrayIcon(createImage("images/satellite.png", "tray icon"));
+	    Image icon=createImage("images/satellite.png", "tray icon");
+	    if (icon == null) {
+	    	URL imgURL = ClassLoader.getSystemResource("satellite.png");
+	    	icon = Toolkit.getDefaultToolkit().getImage(imgURL);
+	    }
+	    trayIcon = new TrayIcon(icon);
 	    tray = SystemTray.getSystemTray();
 	    
 	    CheckboxMenuItem CBAutoIP = new CheckboxMenuItem("Auto-detect IP");
