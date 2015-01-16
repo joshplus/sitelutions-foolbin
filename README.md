@@ -4,7 +4,7 @@ Sitelutions Dynamic DNS Updater
 I created this in my spare time to get better at desktop GUI's. Of course that means that the gui has flaws. I'm not sure that "get better" means that I've gotten good yet.
 
 
-==Use==
+### Use
 When the application starts, it will place an icon in the system tray. You can enter into 
 the system tray settings menu to try to load a file or set the settings.
 
