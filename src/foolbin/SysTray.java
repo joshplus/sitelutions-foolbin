@@ -49,7 +49,7 @@ public class SysTray {
             System.out.println("TrayIcon could not be added.");
             return;
         }
-        
+        CBAutoIP.setState(true);
         CBAutoIP.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 int cb1Id = e.getStateChange();
@@ -69,14 +69,18 @@ public class SysTray {
         
         Quit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+            	settings.save("slfoolbin.settings");
+            	System.exit(0);
             }
         });
 	    
 	}
 	
 	public void setToolTip(String tip){
-		trayIcon.setToolTip(tip);
+		//This may be called even if we couldn't start the systray
+		if (trayIcon != null){
+			trayIcon.setToolTip(tip);
+		}
 	}
 	
     //Obtain the image URL

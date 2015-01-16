@@ -5,10 +5,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Settings {
+public class Settings implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Boolean AutoIP;
 	private int interval, ttl;
 	private String username;
@@ -31,7 +36,7 @@ public class Settings {
 		         out.writeObject(this);
 		         out.close();
 		         fileOut.close();
-		         System.out.printf("Serialized data is saved in /tmp/employee.ser");
+		         System.out.println("Serialized config data is saved in " + path);
 		      }catch(IOException i)
 		      {
 		          i.printStackTrace();
@@ -52,13 +57,15 @@ public class Settings {
 		         username=s.username;
 		         password=s.password;
 		         ids=s.ids;
+		         System.out.println("Serialized config data loaded from " + path);
+		         System.out.println(s);
 		      }catch(IOException i)
 		      {
 		         i.printStackTrace();
 		         return;
 		      }catch(ClassNotFoundException c)
 		      {
-		         System.out.println("Employee class not found");
+		         System.out.println("WHATLOL");
 		         c.printStackTrace();
 		         return;
 		      }
@@ -69,11 +76,15 @@ public class Settings {
 	}
 	
 	public void setRefreshInterval(int interval){
-		interval=this.interval;
+		this.interval=interval;
 	}
 	
 	public void setRefreshInterval(String sinterval){
-		setRefreshInterval(Integer.parseInt(sinterval));
+		try {
+			setRefreshInterval(Integer.parseInt(sinterval));
+		} catch (Exception e) {
+			System.err.println(sinterval + " is not an int!");
+		}
 	}
 
 	public void setUsername(String username){
@@ -89,7 +100,11 @@ public class Settings {
 	}
 	
 	public void setTTL(String sttl){
-		setTTL(Integer.parseInt(sttl));
+		try{
+			setTTL(Integer.parseInt(sttl));
+		} catch (Exception e) {
+			System.err.println(sttl + " is not an int!");
+		}
 	}
 
 	public int getRefreshInterval(){
@@ -97,10 +112,12 @@ public class Settings {
 	}
 	
 	public String getUsername(){
+		if (username==null) return "";
 		return username;
 	}
 	
 	public String getPassword(){
+		if (password==null) return "";
 		return password;
 	}
 	
@@ -137,13 +154,21 @@ public class Settings {
 		Boolean start=true;
 		String idlist="";
 		for (Integer id: ids){
-			if (!start){
-				idlist+=",";
+			if (start){
+				start=false;
 			} else {
-				start=true;
+				idlist+=",";
 			}
 			idlist+=id;
 		}
 		return idlist;
+	}
+	
+	public String toString(){
+		String strid="["+getIDString()+"]";
+		String str = "Settings \nUser:"+username+"\npass:"+password 
+				+ "\ninterval:"+interval + "\nttal:"+ttl+"IDs: "+strid;
+		
+		return str;
 	}
 }

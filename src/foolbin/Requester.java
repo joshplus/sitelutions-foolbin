@@ -4,7 +4,7 @@ import java.net.*;
 
 public class Requester {
 
-	   public String getBody(String urlToRead) {
+	   public static String getBody(String urlToRead) {
 		      URL url;
 		      HttpURLConnection conn;
 		      BufferedReader rd;
