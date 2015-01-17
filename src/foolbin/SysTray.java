@@ -15,11 +15,19 @@ public class SysTray {
 	private SystemTray tray;
 	private Settings settings;
 	private SettingsGUI gui;
-	
+
 	public SysTray(final Settings settings, final SettingsGUI gui){
 		this.gui = gui;
         this.settings=settings;
 
+	    Image icon=createImage("images/satellite.png", "tray icon");
+	    if (icon == null) {
+	    	URL imgURL = ClassLoader.getSystemResource("satellite.png");
+	    	icon = Toolkit.getDefaultToolkit().getImage(imgURL);
+	    }
+	    gui.setIcon(icon);
+	    
+	    
 		//Check the SystemTray support
         if (!SystemTray.isSupported()) {
             System.err.println("SystemTray is not supported");
@@ -28,11 +36,6 @@ public class SysTray {
             return;
         }
 	    popup = new PopupMenu();
-	    Image icon=createImage("images/satellite.png", "tray icon");
-	    if (icon == null) {
-	    	URL imgURL = ClassLoader.getSystemResource("satellite.png");
-	    	icon = Toolkit.getDefaultToolkit().getImage(imgURL);
-	    }
 	    trayIcon = new TrayIcon(icon);
 	    tray = SystemTray.getSystemTray();
 	    
@@ -79,6 +82,10 @@ public class SysTray {
             }
         });
 	    
+	}
+	
+	public Image getIconImg(){
+		return trayIcon.getImage();
 	}
 	
 	public void setToolTip(String tip){

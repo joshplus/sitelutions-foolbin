@@ -24,6 +24,7 @@ public class SettingsGUI {
 	private Settings settings;
     private JFrame frame;
     private Boolean hidden=true;
+    private Image icon;
     
 	public SettingsGUI(Settings s){
 		this.settings=s;
@@ -86,11 +87,16 @@ public class SettingsGUI {
 	    tf.getDocument().addDocumentListener(dl);
 	}
 	
+	public void setIcon(Image i){
+		icon=i;
+	}
+	
     private void createGUI() {
         //Create and set up the window.
         frame = new JFrame("Sitelutions Foolbin Updater");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
- 
+        if (icon != null) frame.setIconImage(icon);
+        
         Container pane = frame.getContentPane();
         pane.setLayout(new GridBagLayout());
                 
